@@ -7,8 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.bson.types.ObjectId;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Document(collection = "expenses")
@@ -20,12 +23,13 @@ public class Expense {
     @JsonSerialize(using= ToStringSerializer.class)
     private ObjectId id;
     private Date date;
-    private Float amount;
+    @Field(targetType = FieldType.DECIMAL128)
+    private BigDecimal amount;
     private String note;
     private ExpenseCategory category;
     private ExpenseSubcategory subcategory;
 
-    public Expense(Date date, Float amount, String note, ExpenseCategory category, ExpenseSubcategory subcategory) {
+    public Expense(Date date, BigDecimal amount, String note, ExpenseCategory category, ExpenseSubcategory subcategory) {
         this.setDate(date);
         this.setAmount(amount);
         this.setNote(note);
@@ -41,11 +45,11 @@ public class Expense {
 		this.date = date;
 	}
 
-	public Float getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Float amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 

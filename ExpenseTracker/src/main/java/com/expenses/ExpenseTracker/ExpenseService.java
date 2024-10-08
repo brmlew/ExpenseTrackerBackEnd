@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,7 +32,7 @@ public class ExpenseService {
         return expenseRepository.findAll();
     }
 
-    public Expense createExpense(String date, Float amount, String note, String category, String subcategory) {
+    public Expense createExpense(String date, BigDecimal amount, String note, String category, String subcategory) {
     	// find category and subcategory based on the provided names
         ExpenseCategory expenseCategory= categoryRepository.findByCategoryName(category);
         ExpenseSubcategory expenseSubcategory = subcategoryRepository.findBySubcategoryNameAndCategory(subcategory, expenseCategory.getId());
@@ -40,6 +41,7 @@ public class ExpenseService {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         try {
             Date newDate = format.parse(date);
+            System.out.println(amount);
             
             // create a new expense object and add it to the mongoDB database
             Expense expense = new Expense(newDate, amount, note, expenseCategory, expenseSubcategory);

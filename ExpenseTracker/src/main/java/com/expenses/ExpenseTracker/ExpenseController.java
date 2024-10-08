@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,9 @@ public class ExpenseController {
     // add an expense to the database, handling the post request
     @PostMapping
     public ResponseEntity<Expense>createExpense(@RequestBody Map<String, String> payload) {
+    	System.out.println(new BigDecimal(payload.get("amount")));
         return new ResponseEntity<Expense>(expenseService.createExpense(payload.get("date"),
-                Float.valueOf(payload.get("amount")),
+                new BigDecimal(payload.get("amount")),
                 payload.get("note"),
                 payload.get("category"),
                 payload.get("subcategory")),
