@@ -18,8 +18,6 @@ public class SubcategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
     
-    private FieldNames fieldNames;
-    
     // get all subcategories from the mongoDB database
     @GetMapping
     public ResponseEntity<List<ExpenseSubcategory>> getAllSubcategories() {
@@ -29,7 +27,7 @@ public class SubcategoryController {
     // add a new subcategory to the database handling a post request
     @PostMapping
     public ResponseEntity<ExpenseSubcategory> createSubcategory(@RequestBody Map<String, String> payload) {
-        ExpenseCategory expenseCategory = categoryRepository.findByCategoryName(payload.get(fieldNames.categoryName));
-        return new ResponseEntity<ExpenseSubcategory>(subcategoryService.createSubcategory(expenseCategory.getId(), payload.get(fieldNames.subcategoryName)), HttpStatus.CREATED);
+        ExpenseCategory expenseCategory = categoryRepository.findByCategoryName(payload.get(FieldNames.CategoryName));
+        return new ResponseEntity<ExpenseSubcategory>(subcategoryService.createSubcategory(expenseCategory.getId(), payload.get(FieldNames.SubcategoryName)), HttpStatus.CREATED);
     }
 }
