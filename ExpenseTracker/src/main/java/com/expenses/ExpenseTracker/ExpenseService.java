@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -33,6 +32,8 @@ public class ExpenseService {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+    
+    private FieldNames fieldNames;
 
     public List<Expense> getAllExpenses() {
         return expenseRepository.findAll();
@@ -75,14 +76,14 @@ public class ExpenseService {
         try {
         	Date newDate = format.parse(date);
         	Query query = new Query();
-        	query.addCriteria(new Criteria().andOperator(Criteria.where("id").is(id)));
+        	query.addCriteria(new Criteria().andOperator(Criteria.where(fieldNames.id).is(id)));
         			
         	Update update = new Update();
-        	update.set("date", newDate);
-        	update.set("amount", amount);
-        	update.set("note", note);
-        	update.set("category", expenseCategory);
-        	update.set("subcategory", expenseSubcategory);
+        	update.set(fieldNames.date, newDate);
+        	update.set(fieldNames.amount, amount);
+        	update.set(fieldNames.note, note);
+        	update.set(fieldNames.category, expenseCategory);
+        	update.set(fieldNames.subcategory, expenseSubcategory);
         	
         	mongoTemplate.updateFirst(query, update, Expense.class);
         	return expenseRepository.findById(id).orElse(null);

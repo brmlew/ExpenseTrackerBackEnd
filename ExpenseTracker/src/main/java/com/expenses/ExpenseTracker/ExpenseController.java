@@ -18,6 +18,8 @@ public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
     
+    private FieldNames fieldNames;
+    
     // receive all expenses from the database
     @GetMapping
     public ResponseEntity<List<Expense>> getAllExpenses() {
@@ -27,25 +29,25 @@ public class ExpenseController {
     // add, remove, or update an expense to the database, handling the post request
     @PostMapping
     public ResponseEntity<Expense>handleExpense(@RequestBody Map<String, String> payload) {
-    	if (payload.get("type").equals("add")) {
-    		return new ResponseEntity<Expense>(expenseService.createExpense(payload.get("date"),
-                    new BigDecimal(payload.get("amount")),
-                    payload.get("note"),
-                    payload.get("category"),
-                    payload.get("subcategory")),
+    	if (payload.get(fieldNames.type).equals(fieldNames.add)) {
+    		return new ResponseEntity<Expense>(expenseService.createExpense(payload.get(fieldNames.date),
+                    new BigDecimal(payload.get(fieldNames.amount)),
+                    payload.get(fieldNames.note),
+                    payload.get(fieldNames.category),
+                    payload.get(fieldNames.subcategory)),
                     HttpStatus.CREATED);
-    	} else if (payload.get("type").equals("delete")) {
-    		ObjectId id = new ObjectId(payload.get("id"));
+    	} else if (payload.get(fieldNames.type).equals(fieldNames.delete)) {
+    		ObjectId id = new ObjectId(payload.get(fieldNames.id));
     		return new ResponseEntity<Expense>(expenseService.deleteExpense(id), 
     				HttpStatus.OK);
     	} else {
-    		ObjectId id = new ObjectId(payload.get("id"));
+    		ObjectId id = new ObjectId(payload.get(fieldNames.id));
     		return new ResponseEntity<Expense>(expenseService.updateExpense(id,
-    				payload.get("date"),
-                    new BigDecimal(payload.get("amount")),
-                    payload.get("note"),
-                    payload.get("category"),
-                    payload.get("subcategory")),
+    				payload.get(fieldNames.date),
+                    new BigDecimal(payload.get(fieldNames.amount)),
+                    payload.get(fieldNames.note),
+                    payload.get(fieldNames.category),
+                    payload.get(fieldNames.subcategory)),
     				HttpStatus.CREATED);
     	}
         
