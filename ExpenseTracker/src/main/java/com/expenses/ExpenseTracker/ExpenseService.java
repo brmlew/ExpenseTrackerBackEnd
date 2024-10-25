@@ -32,8 +32,6 @@ public class ExpenseService {
 
     @Autowired
     private MongoTemplate mongoTemplate;
-    
-    private FieldNames fieldNames;
 
     public List<Expense> getAllExpenses() {
         return expenseRepository.findAll();
@@ -76,14 +74,14 @@ public class ExpenseService {
         try {
         	Date newDate = format.parse(date);
         	Query query = new Query();
-        	query.addCriteria(new Criteria().andOperator(Criteria.where(fieldNames.id).is(id)));
+        	query.addCriteria(new Criteria().andOperator(Criteria.where(FieldNames.Id).is(id)));
         			
         	Update update = new Update();
-        	update.set(fieldNames.date, newDate);
-        	update.set(fieldNames.amount, amount);
-        	update.set(fieldNames.note, note);
-        	update.set(fieldNames.category, expenseCategory);
-        	update.set(fieldNames.subcategory, expenseSubcategory);
+        	update.set(FieldNames.Date, newDate);
+        	update.set(FieldNames.Amount, amount);
+        	update.set(FieldNames.Note, note);
+        	update.set(FieldNames.Category, expenseCategory);
+        	update.set(FieldNames.Subcategory, expenseSubcategory);
         	
         	mongoTemplate.updateFirst(query, update, Expense.class);
         	return expenseRepository.findById(id).orElse(null);

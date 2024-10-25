@@ -10,15 +10,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/expenses")
 public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
-    
-    private FieldNames fieldNames;
     
     // receive all expenses from the database
     @GetMapping
@@ -29,25 +26,25 @@ public class ExpenseController {
     // add, remove, or update an expense to the database, handling the post request
     @PostMapping
     public ResponseEntity<Expense>handleExpense(@RequestBody Map<String, String> payload) {
-    	if (payload.get(fieldNames.type).equals(fieldNames.add)) {
-    		return new ResponseEntity<Expense>(expenseService.createExpense(payload.get(fieldNames.date),
-                    new BigDecimal(payload.get(fieldNames.amount)),
-                    payload.get(fieldNames.note),
-                    payload.get(fieldNames.category),
-                    payload.get(fieldNames.subcategory)),
+    	if (payload.get(FieldNames.Type).equals(FieldNames.Add)) {
+    		return new ResponseEntity<Expense>(expenseService.createExpense(payload.get(FieldNames.Date),
+                    new BigDecimal(payload.get(FieldNames.Amount)),
+                    payload.get(FieldNames.Note),
+                    payload.get(FieldNames.Category),
+                    payload.get(FieldNames.Subcategory)),
                     HttpStatus.CREATED);
-    	} else if (payload.get(fieldNames.type).equals(fieldNames.delete)) {
-    		ObjectId id = new ObjectId(payload.get(fieldNames.id));
+    	} else if (payload.get(FieldNames.Type).equals(FieldNames.Delete)) {
+    		ObjectId id = new ObjectId(payload.get(FieldNames.Id));
     		return new ResponseEntity<Expense>(expenseService.deleteExpense(id), 
     				HttpStatus.OK);
     	} else {
-    		ObjectId id = new ObjectId(payload.get(fieldNames.id));
+    		ObjectId id = new ObjectId(payload.get(FieldNames.Id));
     		return new ResponseEntity<Expense>(expenseService.updateExpense(id,
-    				payload.get(fieldNames.date),
-                    new BigDecimal(payload.get(fieldNames.amount)),
-                    payload.get(fieldNames.note),
-                    payload.get(fieldNames.category),
-                    payload.get(fieldNames.subcategory)),
+    				payload.get(FieldNames.Date),
+                    new BigDecimal(payload.get(FieldNames.Amount)),
+                    payload.get(FieldNames.Note),
+                    payload.get(FieldNames.Category),
+                    payload.get(FieldNames.Subcategory)),
     				HttpStatus.CREATED);
     	}
         
