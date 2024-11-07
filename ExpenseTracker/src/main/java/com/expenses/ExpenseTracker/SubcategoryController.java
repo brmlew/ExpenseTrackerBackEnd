@@ -27,7 +27,7 @@ public class SubcategoryController {
     // add a new subcategory to the database handling a post request
     @PostMapping
     public ResponseEntity<ExpenseSubcategory> createSubcategory(@RequestBody Map<String, String> payload) {
-        ExpenseCategory expenseCategory = categoryRepository.findByCategoryName(payload.get(FieldNames.CategoryName));
-        return new ResponseEntity<ExpenseSubcategory>(subcategoryService.createSubcategory(expenseCategory.getId(), payload.get(FieldNames.SubcategoryName)), HttpStatus.CREATED);
+        ExpenseCategory expenseCategory = categoryRepository.findByCategoryName(payload.get(FieldNames.CATEGORYNAME));
+        return new ResponseEntity<ExpenseSubcategory>(subcategoryService.createSubcategory(expenseCategory.getId(), payload.get(FieldNames.SUBCATEGORYNAME)), HttpStatus.CREATED);
     }
 }

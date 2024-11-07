@@ -74,14 +74,14 @@ public class ExpenseService {
         try {
         	Date newDate = format.parse(date);
         	Query query = new Query();
-        	query.addCriteria(new Criteria().andOperator(Criteria.where(FieldNames.Id).is(id)));
+        	query.addCriteria(new Criteria().andOperator(Criteria.where(FieldNames.ID).is(id)));
         			
         	Update update = new Update();
-        	update.set(FieldNames.Date, newDate);
-        	update.set(FieldNames.Amount, amount);
-        	update.set(FieldNames.Note, note);
-        	update.set(FieldNames.Category, expenseCategory);
-        	update.set(FieldNames.Subcategory, expenseSubcategory);
+        	update.set(FieldNames.DATE, newDate);
+        	update.set(FieldNames.AMOUNT, amount);
+        	update.set(FieldNames.NOTE, note);
+        	update.set(FieldNames.CATEGORY, expenseCategory);
+        	update.set(FieldNames.SUBCATEGORY, expenseSubcategory);
         	
         	mongoTemplate.updateFirst(query, update, Expense.class);
         	return expenseRepository.findById(id).orElse(null);

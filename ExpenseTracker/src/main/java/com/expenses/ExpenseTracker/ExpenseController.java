@@ -26,25 +26,25 @@ public class ExpenseController {
     // add, remove, or update an expense to the database, handling the post request
     @PostMapping
     public ResponseEntity<Expense>handleExpense(@RequestBody Map<String, String> payload) {
-    	if (payload.get(FieldNames.Type).equals(FieldNames.Add)) {
-    		return new ResponseEntity<Expense>(expenseService.createExpense(payload.get(FieldNames.Date),
-                    new BigDecimal(payload.get(FieldNames.Amount)),
-                    payload.get(FieldNames.Note),
-                    payload.get(FieldNames.Category),
-                    payload.get(FieldNames.Subcategory)),
+    	if (payload.get(FieldNames.TYPE).equals(FieldNames.ADD)) {
+    		return new ResponseEntity<Expense>(expenseService.createExpense(payload.get(FieldNames.DATE),
+                    new BigDecimal(payload.get(FieldNames.AMOUNT)),
+                    payload.get(FieldNames.NOTE),
+                    payload.get(FieldNames.CATEGORY),
+                    payload.get(FieldNames.SUBCATEGORY)),
                     HttpStatus.CREATED);
-    	} else if (payload.get(FieldNames.Type).equals(FieldNames.Delete)) {
-    		ObjectId id = new ObjectId(payload.get(FieldNames.Id));
+    	} else if (payload.get(FieldNames.TYPE).equals(FieldNames.DELETE)) {
+    		ObjectId id = new ObjectId(payload.get(FieldNames.ID));
     		return new ResponseEntity<Expense>(expenseService.deleteExpense(id), 
     				HttpStatus.OK);
     	} else {
-    		ObjectId id = new ObjectId(payload.get(FieldNames.Id));
+    		ObjectId id = new ObjectId(payload.get(FieldNames.ID));
     		return new ResponseEntity<Expense>(expenseService.updateExpense(id,
-    				payload.get(FieldNames.Date),
-                    new BigDecimal(payload.get(FieldNames.Amount)),
-                    payload.get(FieldNames.Note),
-                    payload.get(FieldNames.Category),
-                    payload.get(FieldNames.Subcategory)),
+    				payload.get(FieldNames.DATE),
+                    new BigDecimal(payload.get(FieldNames.AMOUNT)),
+                    payload.get(FieldNames.NOTE),
+                    payload.get(FieldNames.CATEGORY),
+                    payload.get(FieldNames.SUBCATEGORY)),
     				HttpStatus.CREATED);
     	}
         
