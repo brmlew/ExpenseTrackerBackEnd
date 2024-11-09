@@ -12,15 +12,18 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
+    @Autowired
+    private SubcategoryService subcategoryService;
 
     public List<ExpenseCategory> getAllCategories() {
         return categoryRepository.findAll();
     }
     
-    public ExpenseCategory createCategory(String categoryName) {
+    public ExpenseCategory createCategory(String categoryName, String subcategoryName) {
         ExpenseCategory expenseCategory = new ExpenseCategory(categoryName);
         mongoTemplate.insert(expenseCategory);
-
+        
+        subcategoryService.createSubcategory(expenseCategory.getId(), subcategoryName);
         return expenseCategory;
     }
 }

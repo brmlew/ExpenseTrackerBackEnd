@@ -25,6 +25,6 @@ public class CategoryController {
     // add a new category to the database given the post request
     @PostMapping
     public ResponseEntity<ExpenseCategory>createCategory(@RequestBody Map<String, String> payload) {
-        return new ResponseEntity<ExpenseCategory>(categoryService.createCategory(payload.get(FieldNames.CATEGORYNAME)), HttpStatus.CREATED);
+        return new ResponseEntity<ExpenseCategory>(categoryService.createCategory(payload.get(FieldNames.CATEGORYNAME), payload.get(FieldNames.SUBCATEGORYNAME)), HttpStatus.CREATED);
     }
 }
